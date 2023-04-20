@@ -15,6 +15,7 @@ namespace SistemaCadastro.Repositorio
         {
             //inserir dados no banco 
             usuario.DateCadastro = DateTime.Now;
+            usuario.SetSenhaHash();
 
             _bancoContext.Usuarios.Add(usuario);
             _bancoContext.SaveChanges();

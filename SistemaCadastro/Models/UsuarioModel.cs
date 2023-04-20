@@ -1,4 +1,5 @@
 ﻿using SistemaCadastro.Enums;
+using SistemaCadastro.Helper;
 using System.ComponentModel.DataAnnotations;
 
 namespace SistemaCadastro.Models
@@ -29,7 +30,12 @@ namespace SistemaCadastro.Models
 
         public bool SenhaValida(string senha)
         {
-            return Senha == senha;
+            return Senha == senha.GerarHash();
+        }
+
+        public void SetSenhaHash()
+        {
+            Senha = Senha.GerarHash();
         }
         public string GerarNovaSenha()
         {
