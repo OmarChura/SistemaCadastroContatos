@@ -1,0 +1,34 @@
+﻿@model UsuarioModel
+@{
+    ViewData["Title"] = "Confirmação de Apagar Contato";
+}
+
+<div class="text-center">
+
+    <br />
+
+    <h3 class="display-4">Excluir Usúario?</h3>
+
+</div>
+
+<form asp-controller="Usuario" asp-action="Apagar" method="">
+
+    <div class="form-group mb-3">
+        <label for="Nome" class="form-label">Nome</label>
+        <input type="text" asp-for="Nome" class="form-control" disabled>
+    </div>
+    <div class="mb-3">
+        <label for="Login" class="form-label">Login</label>
+        <input type="text" asp-for="Login" class="form-control" disabled>
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">E-mail</label>
+        <input type="text" asp-for="Email" class="form-control" disabled>
+    </div>
+    
+
+</form>
+
+<a class="btn btn-primary " role="button" asp-controller="Usuario" asp-action="Index">Cancelar</a>
+<a class="btn btn-danger " role="button" asp-route-id="@Model.Id" asp-controller="Usuario" asp-action="Apagar">Confirmar</a>
+
