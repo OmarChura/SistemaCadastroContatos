@@ -13,6 +13,8 @@ namespace SistemaCadastro.Repositorio
         UsuarioModel Adicionar(UsuarioModel usuario);
         UsuarioModel Atualizar(UsuarioModel usuario);
 
+        UsuarioModel AlterarSenha(AlterarSenhaModel alterarSenha);
+
         bool Apagar(int id);
     }
 }

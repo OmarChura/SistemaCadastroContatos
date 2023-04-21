@@ -22,6 +22,28 @@ namespace SistemaCadastro.Repositorio
             return usuario;
         }
 
+        public UsuarioModel AlterarSenha(AlterarSenhaModel alterarSenha)
+        {
+            UsuarioModel usuarioDB = ListarPorId(alterarSenha.Id);
+
+            if(usuarioDB == null)
+            {
+                throw new Exception("Houve um ero na atualização da senha, usúario não encontrado");
+            }
+
+            if (!usuarioDB.SenhaValida(alterarSenha.SenhaAtual)) throw new Exception("Senha atual nao confere");
+
+            if (usuarioDB.SenhaValida(alterarSenha.NovaSenha)) throw new Exception("Nova senha deve ser diferente da senha atual");
+
+            usuarioDB.SetNovaSenha(alterarSenha.NovaSenha);
+            usuarioDB.DataAtualizacao = DateTime.Now;
+
+            _bancoContext.Usuarios.Update(usuarioDB);
+            _bancoContext.SaveChanges();
+
+            return usuarioDB;
+        }
+
         public bool Apagar(int id)
         {
             UsuarioModel usuarioDB = ListarPorId(id);
