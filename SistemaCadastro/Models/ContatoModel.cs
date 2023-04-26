@@ -18,5 +18,9 @@ namespace SistemaCadastro.Models
         [Phone(ErrorMessage = "Celular invalido")]
         public string Celular { get; set; }
 
+        public int? UsuarioId { get; set; }
+
+        public UsuarioModel Usuario { get; set; }
+
     }
 }

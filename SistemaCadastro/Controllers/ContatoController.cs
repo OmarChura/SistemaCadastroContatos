@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SistemaCadastro.Filters;
+using SistemaCadastro.Helper;
 using SistemaCadastro.Models;
 using SistemaCadastro.Repositorio;
 
@@ -9,15 +10,18 @@ namespace SistemaCadastro.Controllers
     public class ContatoController : Controller
     {
         private readonly IContatoRepositorio _contatoRepositorio;
+        private readonly ISessao _sessao;
 
-        public ContatoController( IContatoRepositorio contatoRepositorio)
+        public ContatoController( IContatoRepositorio contatoRepositorio, ISessao sessao)
         {
             _contatoRepositorio = contatoRepositorio;
+            _sessao = sessao;
         }
 
         public IActionResult Index()
         {
-            List<ContatoModel> contatos = _contatoRepositorio.BuscarTodos();
+            UsuarioModel usuarioLogado = _sessao.BuscarSessaoUsuario();
+            List<ContatoModel> contatos = _contatoRepositorio.BuscarTodos(usuarioLogado.Id);
             return View(contatos);
         }
 
@@ -69,6 +73,9 @@ namespace SistemaCadastro.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    UsuarioModel usuarioLogado = _sessao.BuscarSessaoUsuario();
+                    contato.UsuarioId = usuarioLogado.Id;
+
                     _contatoRepositorio.Adicionar(contato);
                     TempData["MensagemSucesso"] = "Contato cadastrado com sucesso";
                     return RedirectToAction("Index");
@@ -90,11 +97,14 @@ namespace SistemaCadastro.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    UsuarioModel usuarioLogado = _sessao.BuscarSessaoUsuario();
+                    contato.UsuarioId = usuarioLogado.Id;
+
                     _contatoRepositorio.Atualizar(contato);
                     TempData["MensagemSucesso"] = "Contato Editado com sucesso";
                     return RedirectToAction("Index");
                 }
-                return View("Editar", contato);
+                return View(contato);
             }
             catch (SystemException erro)
             {

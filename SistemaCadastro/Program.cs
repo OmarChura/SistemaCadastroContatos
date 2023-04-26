@@ -25,7 +25,6 @@ builder.Services.AddSession(o =>
     o.Cookie.HttpOnly = true;
     o.Cookie.IsEssential = true;
 });
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
