@@ -1,4 +1,5 @@
-﻿using SistemaCadastro.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SistemaCadastro.Data;
 using SistemaCadastro.Models;
 
 namespace SistemaCadastro.Repositorio
@@ -85,7 +86,9 @@ namespace SistemaCadastro.Repositorio
 
         public List<UsuarioModel> BuscarTodos()
         {
-            return _bancoContext.Usuarios.ToList();
+            return _bancoContext.Usuarios
+                .Include(x => x.Contatos)
+                .ToList();
         }
 
         public UsuarioModel ListarPorId(int id)

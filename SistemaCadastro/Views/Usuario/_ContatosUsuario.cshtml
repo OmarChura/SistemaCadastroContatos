@@ -1,0 +1,31 @@
+﻿<!--jquery datatable https://datatables.net/ , site para paginação-->
+@model List<ContatoModel>
+
+<table class="table display" id="table-contatos-usuario">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nome</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Celular</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(Model != null && Model.Any()){
+            foreach (var contato in Model)
+            {
+                <tr>
+                    <th scope="row">@contato.Id</th>
+                    <td>@contato.Nome</td>
+                    <td>@contato.Email</td>
+                    <td>@contato.Celular</td>
+                </tr>
+            }
+        }
+        else{
+            <tr class="add">
+                <td valign="top" colspan="5">Nenhum Contato Encontrado</td>
+            </tr>
+        }
+    </tbody>
+</table>
